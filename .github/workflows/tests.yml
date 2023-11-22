@@ -49,6 +49,9 @@ jobs:
           chmod 600 deploy_key.pem
           ls -l deploy_key.pem  # Check file permissions
 
+      - name: Show contents of deploy_key.pem
+        run: cat deploy_key.pem
+
       - name: Use SSH key to connect to server
         env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
