@@ -1,10 +1,12 @@
 from selenium import webdriver
-
-# pip install selenium
+from selenium.webdriver.chrome.options import Options
 
 
 def test_page_title():
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+
     driver.get("http://127.0.0.1:4000/")
 
     expected_title = "Home"
