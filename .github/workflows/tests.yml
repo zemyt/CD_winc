@@ -13,6 +13,9 @@ jobs:
       - name: Clear known_hosts file
         run: rm -f ~/.ssh/known_hosts
 
+      - name: Clear known hosts
+        run: ssh-keygen -R 159.223.10.226
+
       - name: Checkout code
         uses: actions/checkout@v2
 
