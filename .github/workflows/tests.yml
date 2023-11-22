@@ -38,5 +38,3 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > deploy_key.pem
           chmod 600 deploy_key.pem
           ssh -i deploy_key.pem root@159.223.10.226 "cd /home/"
-
-#
