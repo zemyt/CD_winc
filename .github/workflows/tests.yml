@@ -30,7 +30,7 @@ jobs:
         run: pytest
 
       - name: Deploy to VPS
-        if: ${{ steps.test.outcome == 'success' }}
+        # if: ${{ steps.test.outcome == 'success' }}
         run: |
           echo "$SSH_PRIVATE_KEY" > deploy_key.pem
           chmod 600 deploy_key.pem
