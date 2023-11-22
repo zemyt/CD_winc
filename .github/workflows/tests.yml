@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.11.6" # Specify Python version
+          python-version: "3.11.6"
 
       # - name: Install dependencies
       #   run: |
@@ -25,9 +25,9 @@ jobs:
       - name: Run tests
         run: pytest
 
-      #  >>>>>>>> then
-
       - name: Deploy to VPS
         if: ${{ steps.test.outcome == 'success' }}
         run: |
-          # Add your deployment commands here to transfer code to your VPS
+          echo "$SSH_PRIVATE_KEY" > deploy_key.pem
+          chmod 600 deploy_key.pem
+          ssh -i deploy_key.pem root@159.223.10.226 "cd /home/"
