@@ -32,25 +32,10 @@ jobs:
       - name: Run tests
         run: pytest
 
-      - name: Show contents of PRIVATE_KEY
-        env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo "$PRIVATE_KEY"  # Output the contents of the private key for verification
-
-      - name: Create deploy_key.pem and verify permissions
-        env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Use SSH key to connect to server and deploy
         run: |
           echo "$PRIVATE_KEY" > deploy_key.pem
           chmod 600 deploy_key.pem
-          ls -l deploy_key.pem  # Check file permissions
-
-      - name: Show contents of deploy_key.pem
-        run: cat deploy_key.pem
-
-      - name: Use SSH key to connect to server
+          ssh -o StrictHostKeyChecking=no -i deploy_key.pem root@159.223.10.226 "cd /home/ && git pull && systemctl restart your-application"
         env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          ssh -i deploy_key.pem root@159.223.10.226 "cd /home/"
