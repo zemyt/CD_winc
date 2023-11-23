@@ -3,7 +3,7 @@ name: Run Tests and Deploy
 on:
   push:
     branches:
-      - main # Adjust this based on your branch names
+      - main
 
 jobs:
   build:
@@ -34,6 +34,6 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > deploy_key.pem
           chmod 600 deploy_key.pem
-          ssh -o StrictHostKeyChecking=no -i deploy_key.pem root@159.223.10.226 "cd /home/farm/ && git pull origin main && systemctl restart farm"
+          ssh -o StrictHostKeyChecking=no -i deploy_key.pem root@159.223.10.226 "cd /home/farm/ && git pull origin main && systemctl restart farm && systemctl status farm.service"
         env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
