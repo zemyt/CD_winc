@@ -1,23 +1,21 @@
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
+import pytest
+from main import app
 
 
-# def test_page_title():
-#     options = Options()
-#     options.add_argument("--headless")
-#     driver = webdriver.Chrome(options=options)
-
-#     driver.get("http://127.0.0.1:4000/")
-
-#     expected_title = "Home"
-#     assert driver.title == expected_title
-
-#     driver.quit()
+@pytest.fixture
+def client():
+    app.config["TESTING"] = True
+    with app.test_client() as client:
+        yield client
 
 
-def test_addition():
-    result = 2 + 2
+def test_home_route(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert b"Home" in response.data
 
-    expected_result = 4
 
-    assert result == expected_result
+def test_about_route(client):
+    response = client.get("/about")
+    assert response.status_code == 200
+    assert b"About" in response.data
